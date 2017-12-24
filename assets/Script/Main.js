@@ -19,7 +19,7 @@ cc.Class({
     update: function (dt) {
 
     },
-
+ 
     onTouch: function () {
         this.label.string = "test";
     },
