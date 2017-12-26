@@ -1,0 +1,30 @@
+{
+  "ver": "1.0.0",
+  "uuid": "eb5f5bc8-ec5a-4dd8-8605-8ee80b2f23b4",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "subMetas": {
+    "ic_cab_done_holo_light": {
+      "ver": "1.0.3",
+      "uuid": "a27c874c-5a8d-4735-8fa1-21c858e3fc6d",
+      "rawTextureUuid": "eb5f5bc8-ec5a-4dd8-8605-8ee80b2f23b4",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0.5,
+      "offsetY": -1,
+      "trimX": 14,
+      "trimY": 24,
+      "width": 69,
+      "height": 50,
+      "rawWidth": 96,
+      "rawHeight": 96,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}
