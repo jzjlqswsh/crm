@@ -24,14 +24,13 @@ cc.Class({
 
         // 获取当月第一天星期几
         var firstDay = this.getMonthFirst(year, mouth);
-        
-
-        var lastMonth = (mouth - 1) >= 0 ? (mouth - 1) : 12;
+        var lastMonth = (mouth - 1) >= 0 ? (mouth - 1) : 11;
+        var lastYear = mouth == 11 ? (year - 1) : year;
         
         this.node.getChildByName('data').getChildByName(`year`).getComponent(cc.Label).string = year + " 年";
         this.node.getChildByName('data').getChildByName(`month`).getComponent(cc.Label).string = (mouth + 1) + " 月";
 
-        var lastDay = this.getMonthsDay(year, lastMonth);
+        var lastDay = this.getMonthsDay(lastYear, lastMonth);
         var newlastDay = lastDay;
         for(var i = firstDay - 1; i >= 0; i--) {
              this.node.getChildByName('title1').getChildByName(`item${i}`).color = new cc.Color(192,192,192);
@@ -39,7 +38,6 @@ cc.Class({
         }
 
         cc.log(`lastMonth:${lastMonth} newmonth:${mouth} firstDay:${firstDay} currentDay:${currentDay} lastDay:${lastDay} `);
-
         var newCurrentDay = 1;
         for (var i = firstDay; i <= 6; i++) {
             if (newCurrentDay == day) {
@@ -47,7 +45,6 @@ cc.Class({
             }
             this.node.getChildByName('title1').getChildByName(`item${i}`).getComponent(cc.Label).string = newCurrentDay++;
         }
-
         var num = 1;
         var number = 0;
         for(var i = newCurrentDay; i <= currentDay; i++) {
@@ -61,13 +58,20 @@ cc.Class({
             }
             this.node.getChildByName(`title${num}`).getChildByName(`item${number++}`).getComponent(cc.Label).string = i;
         }
-
+        var index = 1;
         if (number <= 6) {
-            var index = 1;
             for (var i = number; i <=6; i++) {
                 this.node.getChildByName(`title${num}`).getChildByName(`item${number}`).color = new cc.Color(192,192,192);
-                this.node.getChildByName(`title${num}`).getChildByName(`item${number++}`).getComponent(cc.Label).string = index++;
-                
+                this.node.getChildByName(`title${num}`).getChildByName(`item${number++}`).getComponent(cc.Label).string = index++; 
+            }
+        }
+        num++;
+        if (num <= 6){
+            for (var i = num; i <=6; i++) {
+                for (var j = 0; j <=6; j++) {
+                    this.node.getChildByName(`title${i}`).getChildByName(`item${j}`).color = new cc.Color(192,192,192);
+                    this.node.getChildByName(`title${i}`).getChildByName(`item${j}`).getComponent(cc.Label).string = index++; 
+                }
             }
         }
     },
