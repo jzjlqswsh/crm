@@ -9,41 +9,90 @@ cc.Class({
     onLoad: function () {
         var date = new Date()
         var year = date.getFullYear();
-        var mouth = date.getMonth();
+        var month = date.getMonth();
         var day = date.getDate();
-        this.freshViewByDate(year, mouth, day)
-       
+        this.freshViewByDate(year, month, day);
+        
+        var hang = 6;
+        var day = 7;
+        for (var i = 1; i <= hang; i++) {
+            for (var j = 0; j < day; j++) {
+                var item = this.node.getChildByName(`title${i}`).getChildByName(`item${j}`)
+                item.timeNum = i + "_" + j;
+                item.on('mousedown', function ( event ) {
+                  this.chooseTimeByClick(event);
+                },this);
+            }
+        }
     },
 
-    freshViewByDate(year, mouth, day){
+    setCallBackFun(fun){
+        self._callBackFun = fun;
+    },
+
+    chooseTimeByClick(event){
+        var time = event.target.timeData;
+        cc.log(time);
+        var date = new Date();
+        date.setFullYear(Number(time.year));
+        date.setMonth(Number(time.month));
+        date.setDate(Number(time.day));
+        date.setHours(0);
+        date.setMinutes(0);
+        date.setSeconds(0);
+        var timestamp = Math.floor(date.valueOf()/1000);
+        if(self._callBackFun){
+            cc.log(timestamp);    
+            self._callBackFun(timestamp);
+        }
+        this.node.parent.destroy();
+    },
+
+    freshViewByDate(year, month, day){
         this.currentYear = year;
-        this.currentMouth = mouth;
+        this.currentMouth = month;
         this.currentDay = day;
         // 获取这月有多少天
-        var currentDay = this.getMonthsDay(year, mouth);
+        var currentDay = this.getMonthsDay(year, month);
 
         // 获取当月第一天星期几
-        var firstDay = this.getMonthFirst(year, mouth);
-        var lastMonth = (mouth - 1) >= 0 ? (mouth - 1) : 11;
-        var lastYear = mouth == 11 ? (year - 1) : year;
+        var firstDay = this.getMonthFirst(year, month);
+        var lastMonth = (month - 1) >= 0 ? (month - 1) : 11;
+        var lastYear = month == 11 ? (year - 1) : year;
         
         this.node.getChildByName('data').getChildByName(`year`).getComponent(cc.Label).string = year + " 年";
-        this.node.getChildByName('data').getChildByName(`month`).getComponent(cc.Label).string = (mouth + 1) + " 月";
+        this.node.getChildByName('data').getChildByName(`month`).getComponent(cc.Label).string = (month + 1) + " 月";
 
+        var item;
+        var color = new cc.Color(0,0,0);
+        var grayColor = new cc.Color(150,150,150);
+        var currentColor = new cc.Color(65,205,225);
         var lastDay = this.getMonthsDay(lastYear, lastMonth);
         var newlastDay = lastDay;
         for(var i = firstDay - 1; i >= 0; i--) {
-             this.node.getChildByName('title1').getChildByName(`item${i}`).color = new cc.Color(192,192,192);
-             this.node.getChildByName('title1').getChildByName(`item${i}`).getComponent(cc.Label).string = newlastDay--;
+            item = this.node.getChildByName('title1').getChildByName(`item${i}`)
+            item.timeData = {};
+            item.timeData.year = lastYear;
+            item.timeData.month = lastMonth;
+            item.timeData.day = newlastDay--;
+            item.color = grayColor;
+            item.getComponent(cc.Label).string = item.timeData.day;
         }
 
-        cc.log(`lastMonth:${lastMonth} newmonth:${mouth} firstDay:${firstDay} currentDay:${currentDay} lastDay:${lastDay} `);
+        cc.log(`lastMonth:${lastMonth} newmonth:${month} firstDay:${firstDay} currentDay:${currentDay} lastDay:${lastDay} `);
         var newCurrentDay = 1;
         for (var i = firstDay; i <= 6; i++) {
+            item = this.node.getChildByName('title1').getChildByName(`item${i}`)
             if (newCurrentDay == day) {
-                this.node.getChildByName('title1').getChildByName(`item${i}`).color = new cc.Color(65,205,225);
+                item.color = currentColor;
+            }else{
+                item.color = color;
             }
-            this.node.getChildByName('title1').getChildByName(`item${i}`).getComponent(cc.Label).string = newCurrentDay++;
+            item.timeData = {};
+            item.timeData.year = year;
+            item.timeData.month = month;
+            item.timeData.day = newCurrentDay++;
+            item.getComponent(cc.Label).string = item.timeData.day;
         }
         var num = 1;
         var number = 0;
@@ -52,25 +101,46 @@ cc.Class({
                 num++;
                 number = 0;
             }
-
+            item = this.node.getChildByName(`title${num}`).getChildByName(`item${number}`)
+            number++;
             if (i == day) {
-                this.node.getChildByName(`title${num}`).getChildByName(`item${number}`).color = new cc.Color(65,205,225);
+                item.color = currentColor;
+            }else{
+                item.color = color;
             }
-            this.node.getChildByName(`title${num}`).getChildByName(`item${number++}`).getComponent(cc.Label).string = i;
+            item.timeData = {};
+            item.timeData.year = year;
+            item.timeData.month = month;
+            item.timeData.day = i;
+            item.getComponent(cc.Label).string = i;
         }
+        var nextMonth = (month + 1) <= 11 ? (month + 1) : 0;
+        var nextYear = month == 0 ? (year + 1) : year;
         var index = 1;
         if (number <= 6) {
             for (var i = number; i <=6; i++) {
-                this.node.getChildByName(`title${num}`).getChildByName(`item${number}`).color = new cc.Color(192,192,192);
-                this.node.getChildByName(`title${num}`).getChildByName(`item${number++}`).getComponent(cc.Label).string = index++; 
+                item = this.node.getChildByName(`title${num}`).getChildByName(`item${i}`)
+                item.color = grayColor;
+                item.getComponent(cc.Label).string = index;
+                item.timeData = {};
+                item.timeData.year = nextYear;
+                item.timeData.month = nextMonth;
+                item.timeData.day = index;
+                index++; 
             }
         }
         num++;
         if (num <= 6){
             for (var i = num; i <=6; i++) {
                 for (var j = 0; j <=6; j++) {
-                    this.node.getChildByName(`title${i}`).getChildByName(`item${j}`).color = new cc.Color(192,192,192);
-                    this.node.getChildByName(`title${i}`).getChildByName(`item${j}`).getComponent(cc.Label).string = index++; 
+                    item = this.node.getChildByName(`title${i}`).getChildByName(`item${j}`)
+                    item.color = grayColor;
+                    item.getComponent(cc.Label).string = index; 
+                    item.timeData = {};
+                    item.timeData.year = nextYear;
+                    item.timeData.month = nextMonth;
+                    item.timeData.day = index;
+                    index++; 
                 }
             }
         }

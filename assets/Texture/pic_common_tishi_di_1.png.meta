@@ -1,0 +1,30 @@
+{
+  "ver": "1.0.0",
+  "uuid": "67bd02d0-04cd-4ad4-b659-375482b2d302",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "subMetas": {
+    "pic_common_tishi_di_1": {
+      "ver": "1.0.3",
+      "uuid": "6dedf69c-fec6-4bd5-91b7-2e8ca79462e0",
+      "rawTextureUuid": "67bd02d0-04cd-4ad4-b659-375482b2d302",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": 0,
+      "trimX": 0,
+      "trimY": 0,
+      "width": 452,
+      "height": 72,
+      "rawWidth": 452,
+      "rawHeight": 72,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}

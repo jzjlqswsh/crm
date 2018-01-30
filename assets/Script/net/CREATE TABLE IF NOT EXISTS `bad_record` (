@@ -1,0 +1,49 @@
+//创建 表
+
+CREATE TABLE IF NOT EXISTS `bad_record` (
+`id` int(11) NOT NULL AUTO_INCREMENT,
+`productType` varchar(200) ,
+`carType` varchar(200) ,
+`name` varchar(200) ,
+`pinfang` varchar(200) ,
+`line` varchar(200) ,
+`projectName` varchar(200) ,
+`fangNum` varchar(200) ,
+`partName` varchar(200) ,
+`quFen` varchar(200) ,
+`content` varchar(200) ,
+`reason` varchar(200) ,
+`author` varchar(200) ,
+`destroyNum` int(11) ,
+`prduct_time` int(11) DEFAULT NULL,
+`edit_time` int(11) DEFAULT NULL,
+PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+
+CREATE TABLE IF NOT EXISTS `table_desc` (
+`id` int(11) NOT NULL AUTO_INCREMENT,
+`tableName` varchar(200) ,
+`desc` varchar(4096) ,
+`author` varchar(200) ,
+`edit_time` int(11) DEFAULT NULL,
+ PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE IF NOT EXISTS `the_projectName` (
+`id` int(11) NOT NULL AUTO_INCREMENT,
+`productType` varchar(200) ,
+`carType` varchar(200) ,
+`name` varchar(200) ,
+`line` varchar(200) ,
+`projectName` varchar(200) ,
+`fangNum` varchar(200) ,
+`halfPinfang` varchar(200) ,
+`edit_time` int(11) ,
+`author` varchar(200) ,
+ PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
